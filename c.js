@@ -87,7 +87,7 @@ function operator() {
 }
 
 
-// function operator() {
+// function operator() { a to juz dziala ale dziala bez sensu
 //   whitespace();
 //   while (char === '+'){
 //     next();
