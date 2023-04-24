@@ -1,8 +1,11 @@
-const input = "123456789 + 22  33 33 0";
+//yield" is a keyword that is used in a generator function to pause the execution of a function and return a value to the caller.
+//The generator function can then be resumed from where it left off with the next call to the function.
+// * after function creating Generator
+const input = "123456789 + 22 - 33 33 0";
 function isNumeric(c) {
   return "0" <= c && c <= "9";
 }
-function* lexer(str) {
+export function* lexer(str) {
   let cursor = 0;
   let char = str[cursor];
   let column = 1;
@@ -24,9 +27,9 @@ function* lexer(str) {
 }
 
   function number() {
-    let buffer = "";
+    let buffer = ""; 
     while (isNumeric(char)) {
-      buffer += char;
+      buffer += char; 
       next();
     }
 
@@ -73,14 +76,31 @@ function* lexer(str) {
     }
     return true;
   }
-// dlaczego to nie dziala?!!??
+// dlaczego to nie dziala?!!?? już działa
 function operator() {
-  whitespace();
-  while (char === '+'){
+  if (char === '+'){
     next();
     return {
       type: 'PlusToken',
       value: '+',
+    }
+    
+  } else if (char === '-'){
+    next();
+    return {
+      type: 'MinusToken',
+      value: '-',
+    }
+  } else if (char === '*') {
+    next();
+    return {
+      type: 'MultiplyToken',
+      value: '*',
+    }
+  } else if (char === '/') {
+    next();
+    return {
+      type: 'DividToken',
     }
   }
   return null;
@@ -98,10 +118,10 @@ function operator() {
 //   }
 // }
 
-  for (;;) {
-    // this while(true)
+  while (true) {
+    // for(;;) this is the same something new!
    
-    const token =  whitespace() || number() || eof() || eol() || operator()// features are arranged by frequency of use
+    const token =  whitespace() || number() || operator() || eof() || eol() // features are arranged by frequency of use
 
     if (token) {
       yield token;
